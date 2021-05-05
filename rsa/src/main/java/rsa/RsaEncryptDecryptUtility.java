@@ -39,8 +39,7 @@ public class RsaEncryptDecryptUtility {
 	 * 
 	 * @params Integer minimum shards 
 	 * 
-	 * @returns encryptedText a byte array representing the result of the
-	 * encryption.
+	 * @returns 
 	 */  
 	public static void generateKey(Integer total , Integer parts) {
 		 RsakeyGenerator gcsr =  new RsakeyGenerator();
@@ -52,7 +51,12 @@ public class RsaEncryptDecryptUtility {
 
 	 }
 
-	
+	/*
+	 * The encryptData  method encrypt data using public key 
+	 * @params String :Filename
+	 * 
+	 * @returns 
+	 */  
 	public static void encryptData(String dataFilename) throws Exception {
 		
 		RsakeyGenerator gcsr = new RsakeyGenerator();
@@ -78,6 +82,14 @@ public class RsaEncryptDecryptUtility {
 
 	}
 	
+	/*
+	 * The decryptData  method decrypt data 
+	 * @params String :FileName
+	 * @params Integer : total shards
+	 * @params Integer minimum shards 
+	 * 
+	 * @returns 
+	 */  
 	public static void decryptData(String fileName ,Integer total ,Integer part ) throws Exception {
 		RsakeyGenerator gcsr = new RsakeyGenerator();
 		try {
@@ -96,7 +108,7 @@ public class RsaEncryptDecryptUtility {
 	    byte[] privateKeyBytes = ShamirUtil.shamirJoin(total, part, parts);
 	    final PrivateKey privateKey = gcsr.getPrivateKey(privateKeyBytes);
 	    
-	 // use parts to regenerate private key
+	 // decrypt data 
 	    final byte[] decryptedData = gcsr.decrypt(loadencryptedData,privateKey);
 	    RsaFileUtil.writeToFile(fileName + ".decryped", decryptedData);
 		}catch(Exception e) {
@@ -105,6 +117,7 @@ public class RsaEncryptDecryptUtility {
 		
 	}
 	     
+	//main function
 	  public static void main(String[] args) throws Exception {
 		  try {
 			  int length = args.length;
